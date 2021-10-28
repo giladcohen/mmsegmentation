@@ -253,6 +253,12 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         print('type of seg[1]: {}'.format(type(seg[1])))
         print('shape of seg[1]: {}'.format(seg[1].shape))
         print('seg[1] =\n {}'.format(seg[1]))
+        print('type of seg[2]: {}'.format(type(seg[2])))
+        print('shape of seg[2]: {}'.format(seg[2].shape))
+        print('seg[2] =\n {}'.format(seg[2]))
+        print('type of seg[3]: {}'.format(type(seg[3])))
+        print('shape of seg[3]: {}'.format(seg[3].shape))
+        print('seg[3] =\n {}'.format(seg[3]))
 
         color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)
         for label, color in enumerate(palette):
