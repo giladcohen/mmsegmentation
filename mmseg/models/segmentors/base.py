@@ -243,8 +243,6 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         assert palette.shape[1] == 3
         assert len(palette.shape) == 2
         assert 0 < opacity <= 1.0
-        #DEBUG:
-        print('seg = {}'.format(seg))
         color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)
         for label, color in enumerate(palette):
             color_seg[seg == label, :] = color
