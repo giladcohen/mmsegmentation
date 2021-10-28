@@ -96,14 +96,17 @@ def single_gpu_test(model,
         print('\nresult after efficient test:\n {}'.format(result))
 
         if format_only:
+            print('stepping to format_only')
             result = dataset.format_results(
                 result, indices=batch_indices, **format_args)
+            print('\nresult after format_only:\n {}'.format(result))
         if pre_eval:
             # TODO: adapt samples_per_gpu > 1.
             # only samples_per_gpu=1 valid now
+            print('stepping to pre_eval')
             result = dataset.pre_eval(result, indices=batch_indices)
+            print('\nresult after pre eval:\n {}'.format(result))
 
-        print('\nresult after pre eval:\n {}'.format(result))
         results.extend(result)
         print('\nresults after extend:\n {}'.format(results))
 
