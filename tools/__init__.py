@@ -1,1 +1,0 @@
-from mmsegmentation import mmseg
