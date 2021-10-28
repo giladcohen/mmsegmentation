@@ -231,20 +231,6 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         """
         img = mmcv.imread(img)
         img = img.copy()
-        print('result = {}'.format(result))
-        print('type of result: {}'.format(type(result)))
-        print('length of result: {}'.format(len(result)))
-
-        print('type of result[1]: {}'.format(type(result[1])))
-        print('shape of result[1]: {}'.format(result[1].shape))
-        print('result[1] =\n {}'.format(result[1]))
-        print('type of result[2]: {}'.format(type(result[2])))
-        print('shape of result[2]: {}'.format(result[2].shape))
-        print('result[2] =\n {}'.format(result[2]))
-        print('type of result[3]: {}'.format(type(result[3])))
-        print('shape of result[3]: {}'.format(result[3].shape))
-        print('result[3] =\n {}'.format(result[3]))
-
         seg = result[0]
         if palette is None:
             if self.PALETTE is None:
@@ -259,21 +245,6 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         assert 0 < opacity <= 1.0
         #DEBUG:
         print('seg = {}'.format(seg))
-        print('type of seg: {}'.format(type(seg)))
-        print('length of seg: {}'.format(len(seg)))
-        print('type of seg[0]: {}'.format(type(seg[0])))
-        print('shape of seg[0]: {}'.format(seg[0].shape))
-        print('seg[0] =\n {}'.format(seg[0]))
-        print('type of seg[1]: {}'.format(type(seg[1])))
-        print('shape of seg[1]: {}'.format(seg[1].shape))
-        print('seg[1] =\n {}'.format(seg[1]))
-        print('type of seg[2]: {}'.format(type(seg[2])))
-        print('shape of seg[2]: {}'.format(seg[2].shape))
-        print('seg[2] =\n {}'.format(seg[2]))
-        print('type of seg[3]: {}'.format(type(seg[3])))
-        print('shape of seg[3]: {}'.format(seg[3].shape))
-        print('seg[3] =\n {}'.format(seg[3]))
-
         color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)
         for label, color in enumerate(palette):
             color_seg[seg == label, :] = color
