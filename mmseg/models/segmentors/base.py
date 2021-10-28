@@ -231,6 +231,20 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         """
         img = mmcv.imread(img)
         img = img.copy()
+        print('result = {}'.format(result))
+        print('type of result: {}'.format(type(result)))
+        print('length of result: {}'.format(len(result)))
+
+        print('type of result[1]: {}'.format(type(result[1])))
+        print('shape of result[1]: {}'.format(result[1].shape))
+        print('result[1] =\n {}'.format(result[1]))
+        print('type of result[2]: {}'.format(type(result[2])))
+        print('shape of result[2]: {}'.format(result[2].shape))
+        print('result[2] =\n {}'.format(result[2]))
+        print('type of result[3]: {}'.format(type(result[3])))
+        print('shape of result[3]: {}'.format(result[3].shape))
+        print('result[3] =\n {}'.format(result[3]))
+
         seg = result[0]
         if palette is None:
             if self.PALETTE is None:
