@@ -277,6 +277,7 @@ class CustomDataset(Dataset):
         """
         # DEBUG:
         print('entering pre_eval with preds = {}'.format(preds))
+        print('len(preds) = {}'.format(len(preds)))
         print('preds[0].shape = {}\n preds[0].dtype = {}'.format(preds[0].shape, preds[0].dtype))
         # In order to compat with batch inference
         if not isinstance(indices, list):
