@@ -275,10 +275,6 @@ class CustomDataset(Dataset):
             list[torch.Tensor]: (area_intersect, area_union, area_prediction,
                 area_ground_truth).
         """
-        # DEBUG:
-        print('entering pre_eval with preds = {}'.format(preds))
-        print('len(preds) = {}'.format(len(preds)))
-        print('preds[0].shape = {}\n preds[0].dtype = {}'.format(preds[0].shape, preds[0].dtype))
         # In order to compat with batch inference
         if not isinstance(indices, list):
             indices = [indices]
@@ -289,12 +285,10 @@ class CustomDataset(Dataset):
 
         for pred, index in zip(preds, indices):
             seg_map = self.get_gt_seg_map_by_idx(index)
-            print('Entering loop for index={} and \npred = {}'.format(index, pred))
             pre_eval_results.append(
                 intersect_and_union(pred, seg_map, len(self.CLASSES),
                                     self.ignore_index, self.label_map,
                                     self.reduce_zero_label))
-            print("Appending to pre_eval_results: {}".format(pre_eval_results[-1]))
 
         return pre_eval_results
 
