@@ -28,3 +28,8 @@ class PascalVOCDataset(CustomDataset):
         super(PascalVOCDataset, self).__init__(
             img_suffix='.jpg', seg_map_suffix='.png', split=split, **kwargs)
         assert osp.exists(self.img_dir) and self.split is not None
+
+@DATASETS.register_module()
+class MyPascalVOCDataset(PascalVOCDataset):
+    def prepare_test_img(self, idx):
+        return self.prepare_train_img(idx)
