@@ -29,7 +29,10 @@ class PascalVOCDataset(CustomDataset):
             img_suffix='.jpg', seg_map_suffix='.png', split=split, **kwargs)
         assert osp.exists(self.img_dir) and self.split is not None
 
-@DATASETS.register_module()
-class MyPascalVOCDataset(PascalVOCDataset):
     def prepare_test_img(self, idx):
-        return self.prepare_train_img(idx)
+        img_info = self.img_infos[idx]
+        ann_info = self.get_ann_info(idx)
+        results = dict(img_info=img_info, ann_info=ann_info)
+        self.pre_pipeline(results)
+        seg_map = self.gt_seg_map_loader(results)
+        return self.pipeline(results), seg_map['gt_semantic_seg']
