@@ -264,3 +264,38 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
             warnings.warn('show==False and out_file is not specified, only '
                           'result image will be returned')
             return img
+
+    def show_result_all(self,
+                        img,
+                        result,
+                        out_img_file,
+                        out_pred_file,
+                        out_overlap_file,
+                        palette=None,
+                        opacity=0.5):
+        img = mmcv.imread(img)
+        img = img.copy()
+        seg = result[0]
+        if palette is None:
+            if self.PALETTE is None:
+                palette = np.random.randint(
+                    0, 255, size=(len(self.CLASSES), 3))
+            else:
+                palette = self.PALETTE
+        palette = np.array(palette)
+        assert palette.shape[0] == len(self.CLASSES)
+        assert palette.shape[1] == 3
+        assert len(palette.shape) == 2
+        assert 0 < opacity <= 1.0
+        color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)
+        for label, color in enumerate(palette):
+            color_seg[seg == label, :] = color
+        # convert to BGR
+        color_seg = color_seg[..., ::-1]
+
+        # get overlap
+        overlap_img = img * (1 - opacity) + color_seg * opacity
+
+        mmcv.imwrite(img.astype(np.uint8), out_img_file)
+        mmcv.imwrite(color_seg, out_pred_file)
+        mmcv.imwrite(overlap_img.astype(np.uint8), out_overlap_file)
