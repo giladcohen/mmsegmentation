@@ -268,9 +268,9 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
     def show_result_all(self,
                         img,
                         result,
-                        out_img_file,
-                        out_pred_file,
-                        out_overlap_file,
+                        out_img_file=None,
+                        out_pred_file=None,
+                        out_overlap_file=None,
                         palette=None,
                         opacity=0.5):
         img = mmcv.imread(img)
@@ -296,6 +296,9 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         # get overlap
         overlap_img = img * (1 - opacity) + color_seg * opacity
 
-        mmcv.imwrite(img.astype(np.uint8), out_img_file)
-        mmcv.imwrite(color_seg, out_pred_file)
-        mmcv.imwrite(overlap_img.astype(np.uint8), out_overlap_file)
+        if out_img_file is not None:
+            mmcv.imwrite(img.astype(np.uint8), out_img_file)
+        if out_pred_file is not None:
+            mmcv.imwrite(color_seg, out_pred_file)
+        if out_overlap_file is not None:
+            mmcv.imwrite(overlap_img.astype(np.uint8), out_overlap_file)
