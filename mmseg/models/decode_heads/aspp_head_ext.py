@@ -11,8 +11,8 @@ from .aspp_head import ASPPHead
 @HEADS.register_module()
 class ASPPHeadExt(ASPPHead):
     def __init__(self, dilations=(1, 6, 12, 18), **kwargs):
-        super().__init__(dilations, **kwargs)
         self.glove_dim = kwargs.pop('glove_dim')
+        super().__init__(dilations, **kwargs)
         self.glove_conv = nn.Conv2d(self.channels, self.glove_dim, kernel_size=1)
         self.glove_conv_seg = nn.Conv2d(self.glove_dim, self.num_classes, kernel_size=1)
 
