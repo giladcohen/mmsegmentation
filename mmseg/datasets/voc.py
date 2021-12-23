@@ -35,4 +35,6 @@ class PascalVOCDataset(CustomDataset):
         results = dict(img_info=img_info, ann_info=ann_info)
         self.pre_pipeline(results)
         seg_map = self.gt_seg_map_loader(results)
-        return self.pipeline(results), seg_map['gt_semantic_seg']
+        results = self.pipeline(results)
+        results['gt_semantic_seg'] = seg_map['gt_semantic_seg']
+        return results
