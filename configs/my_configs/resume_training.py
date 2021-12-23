@@ -5,7 +5,7 @@ _base_ = [
 ]
 
 log_config = dict(
-    interval=1,
+    interval=10,
     hooks=[
         dict(type='TextLoggerHook', by_epoch=False),
         # dict(type='TensorboardLoggerHook')
@@ -18,7 +18,7 @@ lr_config = dict(policy='poly', power=0.9, min_lr=1e-4, by_epoch=False)
 # runtime settings
 runner = dict(type='IterBasedRunner', max_iters=40000)
 checkpoint_config = dict(by_epoch=False, interval=4000)
-evaluation = dict(interval=4000, metric='mIoU', pre_eval=True)
+evaluation = dict(interval=50, metric='mIoU', pre_eval=True)
 
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
