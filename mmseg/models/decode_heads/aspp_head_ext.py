@@ -5,7 +5,7 @@ from mmcv.cnn import ConvModule
 from mmseg.ops import resize
 from ..builder import HEADS
 from .decode_head import BaseDecodeHead
-from aspp_head import ASPPHead
+from .aspp_head import ASPPHead
 
 
 @HEADS.register_module()
