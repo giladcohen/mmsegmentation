@@ -117,4 +117,5 @@ def train_segmentor(model,
         runner.resume(cfg.resume_from)
     elif cfg.load_from:
         runner.load_checkpoint(cfg.load_from)
+    print('cfg.workflow is:\n{}'.format(cfg.workflow))
     runner.run(data_loaders, cfg.workflow)
