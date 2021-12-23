@@ -5,6 +5,6 @@ _base_ = [
 ]
 model = dict(
     decode_head=dict(num_classes=21), auxiliary_head=dict(num_classes=21))
-runner = dict(type='IterBasedRunner', max_iters=4100)
-checkpoint_config = dict(by_epoch=False, interval=50)
-evaluation = dict(interval=50, metric='mIoU', pre_eval=True)
+# runner = dict(type='IterBasedRunner', max_iters=4100)
+# checkpoint_config = dict(by_epoch=False, interval=50)
+# evaluation = dict(interval=50, metric='mIoU', pre_eval=True)
