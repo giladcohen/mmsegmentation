@@ -27,8 +27,6 @@ find_unused_parameters = True
 
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    samples_per_gpu=2,
-    workers_per_gpu=2,
     type='EncoderDecoder',
     pretrained='open-mmlab://resnet50_v1c',
     backbone=dict(
@@ -59,3 +57,7 @@ model = dict(
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
 
+data = dict(
+    samples_per_gpu=2,
+    workers_per_gpu=2
+)
