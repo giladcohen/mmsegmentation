@@ -11,38 +11,27 @@ log_config = dict(
         # dict(type='TensorboardLoggerHook')
     ])
 # optimizer
-optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005)
+optimizer = dict(type='SGD', lr=0.005, momentum=0.9, weight_decay=0.0005,
+                 paramwise_cfg=dict(
+                     custom_keys={
+                         'backbone': dict(lr_mult=0.0)}))
 optimizer_config = dict()
 # learning policy
 lr_config = dict(policy='poly', power=0.9, min_lr=1e-4, by_epoch=False)
 # runtime settings
-runner = dict(type='IterBasedRunner', max_iters=40000)
-checkpoint_config = dict(by_epoch=False, interval=4000)
-evaluation = dict(interval=50, metric='mIoU', pre_eval=True)
+runner = dict(type='IterBasedRunner', max_iters=10000)
+checkpoint_config = dict(by_epoch=False, interval=1000)
+evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
 
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
-    type='EncoderDecoder',
-    pretrained='open-mmlab://resnet50_v1c',
-    backbone=dict(
-        type='ResNetV1c',
-        depth=50,
-        num_stages=4,
-        out_indices=(0, 1, 2, 3),
-        dilations=(1, 1, 2, 4),
-        strides=(1, 2, 1, 1),
-        norm_cfg=norm_cfg,
-        norm_eval=False,
-        style='pytorch',
-        contract_dilation=True),
     decode_head=dict(
         type='ASPPHeadExt',
         in_channels=2048,
         glove_dim=200,
         in_index=3,
         channels=512,
-        # glove_dim=200,
         dilations=(1, 12, 24, 36),
         dropout_ratio=0.1,
         num_classes=21,
