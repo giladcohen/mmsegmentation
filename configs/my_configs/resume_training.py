@@ -19,6 +19,7 @@ lr_config = dict(policy='poly', power=0.9, min_lr=1e-4, by_epoch=False)
 runner = dict(type='IterBasedRunner', max_iters=40000)
 checkpoint_config = dict(by_epoch=False, interval=4000)
 evaluation = dict(interval=50, metric='mIoU', pre_eval=True)
+find_unused_parameters = True
 
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
@@ -52,3 +53,4 @@ model = dict(
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
+
