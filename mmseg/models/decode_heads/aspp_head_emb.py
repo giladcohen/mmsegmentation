@@ -1,0 +1,23 @@
+import torch
+import torch.nn as nn
+from mmcv.cnn import ConvModule
+
+from mmseg.ops import resize
+from ..builder import HEADS
+from .decode_head import BaseDecodeHead
+from .aspp_head import ASPPHead
+
+
+@HEADS.register_module()
+class ASPPHeadEmb(ASPPHead):
+    def __init__(self, dilations=(1, 6, 12, 18), **kwargs):
+        self.glove_dim = kwargs.pop('glove_dim')
+        super().__init__(dilations, **kwargs)
+        self.glove_conv = nn.Conv2d(self.channels, self.glove_dim, kernel_size=1)
+
+    def cls_seg(self, feat):
+        """Classify each pixel."""
+        if self.dropout is not None:
+            feat = self.dropout(feat)
+        output = self.glove_conv(feat)
+        return output
