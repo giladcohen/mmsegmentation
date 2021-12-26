@@ -52,12 +52,22 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='DistanceLoss', loss_type='L2', loss_weight=1.0)),
+            type='DistanceLoss', loss_type='L2', idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+    ),
     # model training and testing settings
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))
 
 data = dict(
     samples_per_gpu=2,
-    workers_per_gpu=2
+    workers_per_gpu=2,
+    train=dict(
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+    ),
+    val=dict(
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+    ),
+    test=dict(
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+    )
 )

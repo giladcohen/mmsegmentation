@@ -1,5 +1,6 @@
 """Implementing L1, L2, and Linf distance losses"""
-
+import os
+import numpy as np
 import mmcv
 import torch
 import torch.nn as nn
@@ -29,8 +30,13 @@ class DistanceLoss(nn.Module):
             prefix of the name. Defaults to 'loss_lovasz'.
     """
 
-    def __init__(self, loss_type, idx_to_vec=None):
-        super(self).__init__()
+    @staticmethod
+    def get_idx_to_vec(path):
+        assert os.path.exists(path), "path to 'idx_to_vec' ({}) does not exist".format(path)
+        return np.load(path)
+
+    def __init__(self, loss_type, idx_to_vec_path):
+        super().__init__()
         assert loss_type in ('L1', 'L2', 'Linf', 'cosine'), "loss_type should be 'L1/L2/Linf' or 'multi_class'."
 
         if loss_type == 'L1':
@@ -41,13 +47,13 @@ class DistanceLoss(nn.Module):
             self.dist_criterion = LinfLoss()
         else:
             self.dist_criterion = CosineEmbeddingLossV2()
-        self.idx_to_vec = idx_to_vec
+        self.idx_to_vec = torch.from_numpy(self.get_idx_to_vec(idx_to_vec_path))
         self.ignore_index = 255
 
         self._loss_name = 'loss_' + loss_type
 
     def targets_to_embs(self, targets):
-        return torch.from_numpy(self.idx_to_vec[targets.cpu()]).to(targets.device)
+        return self.idx_to_vec[targets.cpu().long()].to(targets.device)
 
     def flatten_embs(self, embs, labels):
         B, C, H, W = embs.size()
