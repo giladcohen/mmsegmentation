@@ -22,7 +22,7 @@ lr_config = dict(policy='poly', power=0.9, min_lr=1e-4, by_epoch=False)
 # runtime settings
 runner = dict(type='IterBasedRunner', max_iters=10000)
 checkpoint_config = dict(by_epoch=False, interval=1000)
-evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
+evaluation = dict(interval=10, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
 
 norm_cfg = dict(type='SyncBN', requires_grad=True)
@@ -59,8 +59,8 @@ model = dict(
     test_cfg=dict(mode='whole'))
 
 data = dict(
-    samples_per_gpu=2,
-    workers_per_gpu=2,
+    samples_per_gpu=1,
+    workers_per_gpu=1,
     train=dict(
         emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
     ),
