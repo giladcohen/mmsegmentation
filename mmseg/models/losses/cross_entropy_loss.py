@@ -185,8 +185,6 @@ class CrossEntropyLoss(nn.Module):
                 reduction_override=None,
                 **kwargs):
         """Forward function."""
-        #debug
-        print('when entering loss we have cls_score.shape = {}, label.shape = {}'.format(cls_score.shape, label.shape))
         print('labels={}'.format(label.flatten().unique()))
         assert reduction_override in (None, 'none', 'mean', 'sum')
         reduction = (

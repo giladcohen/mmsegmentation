@@ -39,7 +39,6 @@ class ASPPHeadEmb(ASPPHead):
         seg_label = seg_label.squeeze(1)
         for loss_decode in self.loss_decode:
             # debug
-            print('self.loss_decode = {}'.format(self.loss_decode))
             if loss_decode.loss_name not in loss:
                 loss[loss_decode.loss_name] = loss_decode(
                     seg_logit,

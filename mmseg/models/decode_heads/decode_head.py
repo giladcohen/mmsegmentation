@@ -201,8 +201,6 @@ class BaseDecodeHead(BaseModule, metaclass=ABCMeta):
             dict[str, Tensor]: a dictionary of loss components
         """
         seg_logits = self.forward(inputs)
-        #debug
-        print('seg_logits.shape = {}\ngt_semantic_seg.logits = {}'.format(seg_logits.shape, gt_semantic_seg.shape))
         losses = self.losses(seg_logits, gt_semantic_seg)
         return losses
 
@@ -246,7 +244,6 @@ class BaseDecodeHead(BaseModule, metaclass=ABCMeta):
         seg_label = seg_label.squeeze(1)
         for loss_decode in self.loss_decode:
             # debug
-            print('self.loss_decode = {}'.format(self.loss_decode))
             if loss_decode.loss_name not in loss:
                 loss[loss_decode.loss_name] = loss_decode(
                     seg_logit,
