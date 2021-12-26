@@ -2,7 +2,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 from ..builder import LOSSES
 from .utils import get_class_weight, weight_reduce_loss
 
@@ -186,6 +185,9 @@ class CrossEntropyLoss(nn.Module):
                 reduction_override=None,
                 **kwargs):
         """Forward function."""
+        #debug
+        print('when entering loss we have cls_score.shape = {}, label.shape = {}'.format(cls_score.shape, label.shape))
+        print('labels={}'.format(label.flatten().unique()))
         assert reduction_override in (None, 'none', 'mean', 'sum')
         reduction = (
             reduction_override if reduction_override else self.reduction)

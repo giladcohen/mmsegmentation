@@ -59,5 +59,14 @@ model = dict(
 
 data = dict(
     samples_per_gpu=2,
-    workers_per_gpu=2
+    workers_per_gpu=2,
+    train=dict(
+        emb_selection='glove'
+    ),
+    val=dict(
+        emb_selection='glove'
+    ),
+    test=dict(
+        emb_selection='glove'
+    )
 )

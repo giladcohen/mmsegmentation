@@ -6,6 +6,7 @@ from mmseg.ops import resize
 from ..builder import HEADS
 from .decode_head import BaseDecodeHead
 from .aspp_head import ASPPHead
+from mmcv.runner import force_fp32
 
 
 @HEADS.register_module()
@@ -21,3 +22,35 @@ class ASPPHeadEmb(ASPPHead):
             feat = self.dropout(feat)
         output = self.glove_conv(feat)
         return output
+
+    @force_fp32(apply_to=('seg_logit', ))
+    def losses(self, seg_logit, seg_label):
+        """Compute segmentation loss."""
+        loss = dict()
+        seg_logit = resize(
+            input=seg_logit,
+            size=seg_label.shape[2:],
+            mode='bilinear',
+            align_corners=self.align_corners)
+        if self.sampler is not None:
+            seg_weight = self.sampler.sample(seg_logit, seg_label)
+        else:
+            seg_weight = None
+        seg_label = seg_label.squeeze(1)
+        for loss_decode in self.loss_decode:
+            # debug
+            print('self.loss_decode = {}'.format(self.loss_decode))
+            if loss_decode.loss_name not in loss:
+                loss[loss_decode.loss_name] = loss_decode(
+                    seg_logit,
+                    seg_label,
+                    weight=seg_weight,
+                    ignore_index=self.ignore_index)
+            else:
+                loss[loss_decode.loss_name] += loss_decode(
+                    seg_logit,
+                    seg_label,
+                    weight=seg_weight,
+                    ignore_index=self.ignore_index)
+
+        return loss

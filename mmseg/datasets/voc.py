@@ -34,6 +34,7 @@ class PascalVOCDataset(CustomDataset):
             img_suffix='.jpg', seg_map_suffix='.png', split=split, **kwargs)
         assert osp.exists(self.img_dir) and self.split is not None
         self.idx_to_class_emb_vec = self.set_emb_vecs(self.emb_selection)
+        print('cool')
 
     @staticmethod
     def parse_vec(s: str):
