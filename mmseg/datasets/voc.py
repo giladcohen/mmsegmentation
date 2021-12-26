@@ -1,6 +1,7 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import os.path as osp
 import numpy as np
+import os
 
 from .builder import DATASETS
 from .custom import CustomDataset
@@ -29,12 +30,19 @@ class PascalVOCDataset(CustomDataset):
                [128, 64, 0], [0, 192, 0], [128, 192, 0], [0, 64, 128]]
 
     def __init__(self, split, **kwargs):
-        self.emb_selection = kwargs.pop('emb_selection', None)
+        self.emb = kwargs.pop('emb', None)
         super(PascalVOCDataset, self).__init__(
             img_suffix='.jpg', seg_map_suffix='.png', split=split, **kwargs)
         assert osp.exists(self.img_dir) and self.split is not None
-        self.idx_to_class_emb_vec = self.set_emb_vecs(self.emb_selection)
-        print('cool')
+        if self.emb is not None:
+            if os.path.exists(self.emb['emb_path']):
+                print('emb path {} exist. reading content to self.idx_to_class_emb_vec'.format(self.emb['emb_path']))
+                self.idx_to_class_emb_vec = np.load(self.emb['emb_path'])
+            else:
+                print('Generating emb map for {} and dumping it to {}'.format(self.emb['emb_selection'], self.emb['emb_path']))
+                self.idx_to_class_emb_vec = self.set_emb_vecs(self.emb['emb_selection'])
+                os.makedirs(os.path.dirname(self.emb['emb_path']), exist_ok=True)
+                np.save(self.emb['emb_path'], self.idx_to_class_emb_vec)
 
     @staticmethod
     def parse_vec(s: str):
@@ -86,9 +94,7 @@ class PascalVOCDataset(CustomDataset):
         return gloves
 
     def set_emb_vecs(self, emb_selection):
-        if emb_selection is None:
-            return None
-        elif emb_selection == 'glove':
+        if emb_selection == 'glove':
             embs = self.set_glove()
         elif emb_selection == 'random':
             embs = np.random.randn(len(self.CLASSES), self.EMB_DIM)
