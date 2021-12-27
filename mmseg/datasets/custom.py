@@ -229,7 +229,6 @@ class CustomDataset(Dataset):
             dict: Testing data after pipeline with new keys introduced by
                 pipeline.
         """
-        print('preparing test image for custom')
         img_info = self.img_infos[idx]
         results = dict(img_info=img_info)
         self.pre_pipeline(results)
