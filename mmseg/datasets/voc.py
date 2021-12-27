@@ -111,12 +111,12 @@ class PascalVOCDataset(CustomDataset):
         embs = embs.astype(np.float32)
         return embs
 
-    # def prepare_test_img(self, idx):
-    #     img_info = self.img_infos[idx]
-    #     ann_info = self.get_ann_info(idx)
-    #     results = dict(img_info=img_info, ann_info=ann_info)
-    #     self.pre_pipeline(results)
-    #     seg_map = self.gt_seg_map_loader(results)
-    #     results = self.pipeline(results)
-    #     results['gt_semantic_seg'] = seg_map['gt_semantic_seg']
-    #     return results
+    def prepare_test_img(self, idx):
+        img_info = self.img_infos[idx]
+        ann_info = self.get_ann_info(idx)
+        results = dict(img_info=img_info, ann_info=ann_info)
+        self.pre_pipeline(results)
+        seg_map = self.gt_seg_map_loader(results)
+        results = self.pipeline(results)
+        results['gt_semantic_seg'] = seg_map['gt_semantic_seg']
+        return results
