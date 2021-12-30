@@ -59,7 +59,7 @@ model = dict(
 
 data = dict(
     samples_per_gpu=2,
-    workers_per_gpu=2,
+    workers_per_gpu=1,
     train=dict(
         emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
     ),
@@ -70,3 +70,4 @@ data = dict(
         emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
     )
 )
+# workflow = [('train', 1)]
