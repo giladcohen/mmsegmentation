@@ -70,9 +70,9 @@ class DistanceLoss(nn.Module):
     def forward(self, embs, labels, **kwargs):
         embs, labels = self.flatten_embs(embs, labels)
         embs_gt = self.targets_to_embs(labels)
-        np.save('/tmp/debug/embs_{}'.format(self.cnt), embs)
-        np.save('/tmp/debug/labels_{}'.format(self.cnt), labels)
-        np.save('/tmp/debug/embs_gt_{}'.format(self.cnt), embs_gt)
+        np.save('/home/gilad/tmp/debug/embs_{}'.format(self.cnt), embs)
+        np.save('/home/gilad/tmp/debug/labels_{}'.format(self.cnt), labels)
+        np.save('/home/gilad/tmp/debug/embs_gt_{}'.format(self.cnt), embs_gt)
         self.cnt += 1
         loss = self.dist_criterion(embs, embs_gt)
         return loss
