@@ -49,6 +49,7 @@ class DistanceLoss(nn.Module):
             self.dist_criterion = CosineEmbeddingLossV2()
         self.idx_to_vec = torch.from_numpy(self.get_idx_to_vec(idx_to_vec_path))
         self.ignore_index = 255
+        self.cnt = 0
 
         self._loss_name = 'loss_' + loss_type
 
@@ -69,6 +70,10 @@ class DistanceLoss(nn.Module):
     def forward(self, embs, labels, **kwargs):
         embs, labels = self.flatten_embs(embs, labels)
         embs_gt = self.targets_to_embs(labels)
+        np.save('/tmp/debug/embs_{}'.format(self.cnt), embs)
+        np.save('/tmp/debug/labels_{}'.format(self.cnt), labels)
+        np.save('/tmp/debug/embs_gt_{}'.format(self.cnt), embs_gt)
+        self.cnt += 1
         loss = self.dist_criterion(embs, embs_gt)
         return loss
 
