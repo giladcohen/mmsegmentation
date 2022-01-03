@@ -61,7 +61,8 @@ data = dict(
     samples_per_gpu=2,
     workers_per_gpu=2,
     train=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
+                 class_weight='VOC_cls_weight')
     ),
     val=dict(
         emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')

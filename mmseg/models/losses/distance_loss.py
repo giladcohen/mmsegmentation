@@ -5,11 +5,10 @@ import mmcv
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.modules.loss import L1Loss
 
 from ..builder import LOSSES
 from .utils import get_class_weight, weight_reduce_loss
-from research.losses.losses import L2Loss, LinfLoss, CosineEmbeddingLossV2
+from research.losses.losses import L1Loss, L2Loss, LinfLoss, CosineEmbeddingLossV2
 
 @LOSSES.register_module()
 class DistanceLoss(nn.Module):
@@ -35,7 +34,7 @@ class DistanceLoss(nn.Module):
         assert os.path.exists(path), "path to 'idx_to_vec' ({}) does not exist".format(path)
         return np.load(path)
 
-    def __init__(self, loss_type, idx_to_vec_path):
+    def __init__(self, loss_type, idx_to_vec_path, class_weight=None):
         super().__init__()
         assert loss_type in ('L1', 'L2', 'Linf', 'cosine'), "loss_type should be 'L1/L2/Linf' or 'multi_class'."
 
@@ -49,8 +48,7 @@ class DistanceLoss(nn.Module):
             self.dist_criterion = CosineEmbeddingLossV2()
         self.idx_to_vec = torch.from_numpy(self.get_idx_to_vec(idx_to_vec_path))
         self.ignore_index = 255
-        self.cnt = 0
-
+        self.class_weight = torch.from_numpy(get_class_weight(class_weight))
         self._loss_name = 'loss_' + loss_type
 
     def targets_to_embs(self, targets):
@@ -70,11 +68,11 @@ class DistanceLoss(nn.Module):
     def forward(self, embs, labels, **kwargs):
         embs, labels = self.flatten_embs(embs, labels)
         embs_gt = self.targets_to_embs(labels)
-        np.save('/home/gilad/tmp/debug/embs_{}'.format(self.cnt), embs)
-        np.save('/home/gilad/tmp/debug/labels_{}'.format(self.cnt), labels)
-        np.save('/home/gilad/tmp/debug/embs_gt_{}'.format(self.cnt), embs_gt)
-        self.cnt += 1
-        loss = self.dist_criterion(embs, embs_gt)
+        if self.class_weight is not None:
+            class_weight = self.class_weight.index_select(0, labels)
+        else:
+            class_weight = None
+        loss = self.dist_criterion(embs, embs_gt, class_weight)
         return loss
 
     @property
