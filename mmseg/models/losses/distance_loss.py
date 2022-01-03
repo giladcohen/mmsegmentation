@@ -45,7 +45,7 @@ class DistanceLoss(nn.Module):
         elif loss_type == 'Linf':
             self.dist_criterion = LinfLoss()
         else:
-            self.dist_criterion = CosineEmbeddingLossV2()
+            self.dist_criterion = CosineEmbeddingLossV2(reduction='none' if class_weight else 'mean')
         self.idx_to_vec = torch.from_numpy(self.get_idx_to_vec(idx_to_vec_path))
         self.ignore_index = 255
         self.class_weight = torch.from_numpy(get_class_weight(class_weight))
