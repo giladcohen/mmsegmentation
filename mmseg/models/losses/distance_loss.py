@@ -69,6 +69,7 @@ class DistanceLoss(nn.Module):
         embs, labels = self.flatten_embs(embs, labels)
         embs_gt = self.targets_to_embs(labels)
         if self.class_weight is not None:
+            self.class_weight = self.class_weight.to(labels.device)
             class_weight = self.class_weight.index_select(0, labels)
         else:
             class_weight = None
