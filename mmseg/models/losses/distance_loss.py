@@ -73,12 +73,10 @@ class DistanceLoss(nn.Module):
             class_weight = self.class_weight.index_select(0, labels)
         else:
             class_weight = None
-        print('DEBUG({}): labels.shape={}\nlabels.unique()={}\nlabels={}'
-              .format(self.dist_criterion.__class__, labels.shape, labels.unique(), labels))
-        print('DEBUG({}): weights.shape={}\nweights.unique()={}\nweights={}'
-              .format(self.dist_criterion.__class__, class_weight.shape, class_weight.unique(), class_weight))
-        # print('DEBUG(L2Loss): input.shape={}\ninput={}'.format(input.shape, input))
-        # print('DEBUG(L2Loss): target.shape={}\ntarget.unique()={}\ntarget={}'.format(target.shape, target.unique(), target))
+        # print('DEBUG({}): labels.shape={}\nlabels.unique()={}\nlabels={}'
+        #       .format(self.dist_criterion.__class__, labels.shape, labels.unique(), labels))
+        # print('DEBUG({}): weights.shape={}\nweights.unique()={}\nweights={}'
+        #       .format(self.dist_criterion.__class__, class_weight.shape, class_weight.unique(), class_weight))
         loss = self.dist_criterion(embs, embs_gt, class_weight)
         return loss
 
