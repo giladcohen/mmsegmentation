@@ -48,7 +48,10 @@ class DistanceLoss(nn.Module):
             self.dist_criterion = CosineEmbeddingLossV2(reduction='none' if class_weight else 'mean')
         self.idx_to_vec = torch.from_numpy(self.get_idx_to_vec(idx_to_vec_path))
         self.ignore_index = 255
-        self.class_weight = torch.from_numpy(get_class_weight(class_weight))
+        if class_weight is not None:
+            self.class_weight = torch.from_numpy(get_class_weight(class_weight))
+        else:
+            self.class_weight = None
         self._loss_name = 'loss_' + loss_type
 
     def targets_to_embs(self, targets):
