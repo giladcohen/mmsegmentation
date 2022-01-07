@@ -53,7 +53,7 @@ model = dict(
         loss_decode=dict(
             type='DistanceLoss', loss_type='L2',
             idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
-            class_weight='/data/dataset/VOCdevkit/VOC_seg_weights_v2.npy')
+            class_weight='/data/dataset/VOCdevkit/VOC_seg_weights_v3.npy')
     ),
     # model training and testing settings
     train_cfg=dict(),
