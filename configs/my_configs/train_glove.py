@@ -19,7 +19,7 @@ optimizer_config = dict()
 # learning policy
 lr_config = dict(policy='poly', power=0.9, min_lr=0.0, by_epoch=False)  # min_lr was 1e-4
 # runtime settings
-runner = dict(type='IterBasedRunner', max_iters=10000)
+runner = dict(type='IterBasedRunner', max_iters=40000)
 checkpoint_config = dict(by_epoch=False, interval=10000)
 evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
@@ -53,7 +53,7 @@ model = dict(
         loss_decode=dict(
             type='DistanceLoss', loss_type='L2',
             idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
-            class_weight='/data/dataset/VOCdevkit/VOC_seg_weights_v3.npy')
+            class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy')
     ),
     # model training and testing settings
     train_cfg=dict(),
