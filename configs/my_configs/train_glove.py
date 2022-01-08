@@ -52,7 +52,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='DistanceLoss', loss_type='cosine',
-            idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy',
+            idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
             class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy')
     ),
     # model training and testing settings
