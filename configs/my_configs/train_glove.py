@@ -19,7 +19,7 @@ optimizer_config = dict()
 # learning policy
 lr_config = dict(policy='poly', power=0.9, min_lr=0.0, by_epoch=False)  # min_lr was 1e-4
 # runtime settings
-runner = dict(type='IterBasedRunner', max_iters=40000)
+runner = dict(type='IterBasedRunner', max_iters=10000)
 checkpoint_config = dict(by_epoch=False, interval=10000)
 evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
@@ -52,7 +52,7 @@ model = dict(
         align_corners=False,
         loss_decode=dict(
             type='DistanceLoss', loss_type='cosine',
-            idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
+            idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy',
             class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy')
     ),
     # model training and testing settings
@@ -63,13 +63,13 @@ data = dict(
     samples_per_gpu=2,
     workers_per_gpu=2,
     train=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy')
     ),
     val=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy')
     ),
     test=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy')
     )
 )
 # workflow = [('train', 1)]
