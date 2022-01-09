@@ -11,7 +11,7 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')
     ])
 # optimizer
-optimizer = dict(type='SGD', lr=1e-4, momentum=0.9, weight_decay=0.0005)
+optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005)
                  # paramwise_cfg=dict(
                  #     custom_keys={
                  #         'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
@@ -51,8 +51,8 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='DistanceLoss', loss_type='L2',
-            idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy',
+            type='DistanceLoss', loss_type='cosine',
+            idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
             class_weight=None,
             # class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy'
         )
@@ -65,13 +65,13 @@ data = dict(
     samples_per_gpu=2,
     workers_per_gpu=2,
     train=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
     ),
     val=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
     ),
     test=dict(
-        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy')
+        emb=dict(emb_selection='glove', emb_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy')
     )
 )
 # workflow = [('train', 1)]
