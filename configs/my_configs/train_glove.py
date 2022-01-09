@@ -11,16 +11,16 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')
     ])
 # optimizer
-optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005)
+optimizer = dict(type='SGD', lr=1e-4, momentum=0.9, weight_decay=0.0005)
                  # paramwise_cfg=dict(
                  #     custom_keys={
                  #         'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
 optimizer_config = dict()
 # learning policy
-lr_config = dict(policy='poly', power=0.9, min_lr=1e-4, by_epoch=False)  # min_lr was 1e-4
+lr_config = dict(policy='poly', power=0.9, min_lr=1e-7, by_epoch=False)  # min_lr was 1e-4
 # runtime settings
 runner = dict(type='IterBasedRunner', max_iters=40000)
-checkpoint_config = dict(by_epoch=False, interval=4000)
+checkpoint_config = dict(by_epoch=False, interval=20000)
 evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
 
@@ -53,8 +53,8 @@ model = dict(
         loss_decode=dict(
             type='DistanceLoss', loss_type='L2',
             idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb_w_background.npy',
-            # class_weight=None,
-            class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy'
+            class_weight=None,
+            # class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy'
         )
     ),
     # model training and testing settings
