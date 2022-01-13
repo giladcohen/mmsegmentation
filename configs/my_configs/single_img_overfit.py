@@ -22,8 +22,8 @@ optimizer_config = dict()
 # learning policy
 lr_config = dict(policy='fixed')
 # runtime settings
-runner = dict(type='IterBasedRunner', max_iters=300)
-checkpoint_config = dict(by_epoch=False, interval=300)
+runner = dict(type='IterBasedRunner', max_iters=1000)
+checkpoint_config = dict(by_epoch=False, interval=250)
 evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
 
