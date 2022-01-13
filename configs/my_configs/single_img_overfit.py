@@ -19,10 +19,10 @@ optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0,
 
 optimizer_config = dict()
 # learning policy
-lr_config = dict(policy='poly', power=0.9, min_lr=0.0, by_epoch=False)  # min_lr was 1e-4
+lr_config = dict(policy='fixed')
 # runtime settings
-runner = dict(type='IterBasedRunner', max_iters=40000)
-checkpoint_config = dict(by_epoch=False, interval=40000)
+runner = dict(type='IterBasedRunner', max_iters=300)
+checkpoint_config = dict(by_epoch=False, interval=300)
 evaluation = dict(interval=100, metric='mIoU', pre_eval=True)
 find_unused_parameters = True
 
