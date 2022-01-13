@@ -12,7 +12,7 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')
     ])
 # optimizer
-optimizer = dict(type='SGD', lr=0.0001, momentum=0.9, weight_decay=0.0,
+optimizer = dict(type='SGD', lr=0.00001, momentum=0.9, weight_decay=0.0,
                  paramwise_cfg=dict(
                      custom_keys={
                          'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
