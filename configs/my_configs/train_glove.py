@@ -50,7 +50,7 @@ model = dict(
         norm_cfg=norm_cfg,
         align_corners=False,
         loss_decode=dict(
-            type='DistanceLoss', loss_type='L2',
+            type='DistanceLoss', loss_type='cosine',
             idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
             class_weight=None,
             # class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy'
