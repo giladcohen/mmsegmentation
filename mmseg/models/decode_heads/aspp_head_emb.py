@@ -14,13 +14,15 @@ class ASPPHeadEmb(ASPPHead):
     def __init__(self, dilations=(1, 6, 12, 18), **kwargs):
         self.glove_dim = kwargs.pop('glove_dim')
         super().__init__(dilations, **kwargs)
-        self.glove_conv = nn.Conv2d(self.channels, self.glove_dim, kernel_size=1)
+        self.glove_conv1 = nn.Conv2d(self.channels, self.glove_dim, kernel_size=1)
+        self.glove_conv2 = nn.Conv2d(self.glove_dim, self.glove_dim, kernel_size=1)
 
     def cls_seg(self, feat):
         """Classify each pixel."""
         if self.dropout is not None:
             feat = self.dropout(feat)
-        output = self.glove_conv(feat)
+        output = self.glove_conv1(feat)
+        output = self.glove_conv2(output)
         return output
 
     @force_fp32(apply_to=('seg_logit', ))
