@@ -17,7 +17,7 @@ optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005,
                          'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
 optimizer_config = dict()
 # learning policy
-lr_config = dict(policy='step', step=[1e4, 2e4, 3e4, 4e4, 5e4, 6e4, 7e4, 8e4, 9e4], gamma=0.43, by_epoch=False)
+lr_config = dict(policy='step', step=[1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000], gamma=0.43, by_epoch=False)
 # runtime settings
 runner = dict(type='IterBasedRunner', max_iters=10000)
 checkpoint_config = dict(by_epoch=False, interval=2500)
