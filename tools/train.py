@@ -21,7 +21,8 @@ from mmseg.utils import collect_env, get_root_logger
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a segmentor')
-    parser.add_argument('config', help='train config file path')
+    # parser.add_argument('config', help='train config file path')  # debug
+    parser.add_argument('config', help='train config file path')  # debug
     parser.add_argument('--work-dir', help='the dir to save logs and models')
     parser.add_argument(
         '--load-from', help='the checkpoint file to load weights from')
@@ -56,6 +57,10 @@ def parse_args():
         default='none',
         help='job launcher')
     parser.add_argument('--local_rank', type=int, default=0)
+
+    parser.add_argument('--mode', default='null', type=str, help='to bypass pycharm bug')
+    parser.add_argument('--port', default='null', type=str, help='to bypass pycharm bug')
+
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
         os.environ['LOCAL_RANK'] = str(args.local_rank)
@@ -65,6 +70,12 @@ def parse_args():
 
 def main():
     args = parse_args()
+    # DEBUG:
+    # args.config = '/Users/giladcohen/workspace/mmsegmentation/configs/my_configs/single_img_overfit.py'
+    # args.work_dir = '/data/gilad/logs/glove_emb/pascal/single_img_mem_adam_L2_full_phase_4/code_debug'
+    # args.load_from = '/data/gilad/logs/glove_emb/pascal/single_img_mem_adam_L2_full_phase_4/latest.pth'
+    # args.no_validate = True
+    # args.gpus = 1
 
     cfg = Config.fromfile(args.config)
     if args.options is not None:
