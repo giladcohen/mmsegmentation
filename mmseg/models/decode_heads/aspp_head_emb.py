@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from mmcv.cnn import ConvModule
 
 from mmseg.ops import resize
@@ -22,6 +23,7 @@ class ASPPHeadEmb(ASPPHead):
         if self.dropout is not None:
             feat = self.dropout(feat)
         output = self.glove_conv1(feat)
+        output = F.relu(output)
         output = self.glove_conv2(output)
         return output
 
