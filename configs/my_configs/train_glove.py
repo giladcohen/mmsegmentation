@@ -13,7 +13,9 @@ log_config = dict(
 optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005,
                  paramwise_cfg=dict(
                      custom_keys={
-                         'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
+                         # 'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
+                         'backbone': dict(lr_mult=0.1)}))
+
 optimizer_config = dict()
 # learning policy
 lr_config = dict(policy='step', step=[1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000], gamma=0.43, by_epoch=False)
@@ -52,8 +54,8 @@ model = dict(
         loss_decode=dict(
             type='DistanceLoss', loss_type='L2',
             idx_to_vec_path='/data/gilad/logs/glove_emb/pascal/glove_idx_to_emb.npy',
-            # class_weight=None,
-            class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy'
+            class_weight=None,
+            # class_weight='/data/dataset/VOCdevkit/VOC_seg_weights.npy'
         )
     ),
     # model training and testing settings
