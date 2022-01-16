@@ -10,11 +10,11 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')
     ])
 # optimizer
-optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005,
-                 paramwise_cfg=dict(
-                     custom_keys={
-                         # 'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
-                         'backbone': dict(lr_mult=0.1)}))
+optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005)
+                 # paramwise_cfg=dict(
+                 #     custom_keys={
+                 #         # 'backbone': dict(lr_mult=0.0, decay_mult=0.0)}))
+                 #         'backbone': dict(lr_mult=0.1)}))
 
 optimizer_config = dict()
 # learning policy
