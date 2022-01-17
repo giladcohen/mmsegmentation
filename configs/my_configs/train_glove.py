@@ -16,7 +16,7 @@ optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0005,
                          'backbone': dict(lr_mult=0.0, decay_mult=0.0),
                          'image_pool': dict(lr_mult=0.0, decay_mult=0.0),
                          'aspp_modules': dict(lr_mult=0.0, decay_mult=0.0),
-                         'bottleneck': dict(lr_mult=0.0, decay_mult=0.0)
+                         # 'bottleneck': dict(lr_mult=0.0, decay_mult=0.0)
                      })
                  )
 optimizer_config = dict()
